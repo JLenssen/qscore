@@ -3,7 +3,9 @@ networkx==2.8.8
 dwave-ocean-sdk==4.4.0
 strawberryfields==0.23.0
 matplotlib==3.5.2
-qiskit[optimization]==0.39.4
+qiskit[optimization]==0.42.1
 quantuminspire==2.2.0
 python-dotenv==0.21.0
 pytest==7.2.1
+iqm-client==13.0
+qiskit-iqm==10.4

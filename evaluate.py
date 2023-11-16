@@ -72,6 +72,7 @@ def parse_args() -> argparse.Namespace:
         help="Name of hardware provider in case QAOA is selected.",
         choices=[
             "local simulator",
+            "iqm",
             "ibm",
             "qi",
         ],
@@ -146,7 +147,8 @@ def main(
         "Simulated_Annealing",
         "Photonic_Simulation",
     ]:
-        raise ValueError("num_reads has not been submitted while required by solver.")
+        raise ValueError(
+            "num_reads has not been submitted while required by solver.")
 
     if seed is None:
         seed = np.random.randint(100000)
@@ -185,7 +187,8 @@ def main(
         # Solve problem instance
         if solver in ["Advantage_system4.1", "DW_2000Q_6"]:
             start_time = time.time()
-            objective_result = run_dwave_qpu(Q, size, solver, num_reads, timeout)
+            objective_result = run_dwave_qpu(
+                Q, size, solver, num_reads, timeout)
             end_time = time.time()
         elif solver == "hybrid":
             start_time = time.time()
@@ -200,7 +203,8 @@ def main(
             objective_result = run_qbsolv(Q, size, timeout)
             end_time = time.time()
         else:
-            raise NotImplementedError(f"Provided Solver {solver} is not implemented")
+            raise NotImplementedError(
+                f"Provided Solver {solver} is not implemented")
 
     # Calculate beta
     if problem_type == "max-cut":

@@ -117,7 +117,7 @@ def run_QAOA(
 
     backend, provider_ = initialize_backend(provider, backend)
     backend.shots = number_of_shots
-    if provider in "ibm":
+    if provider == "ibm":
         qaoa_mes = QAOAClient(
             provider=provider_,
             backend=backend,
