@@ -6,6 +6,8 @@ import time
 from multiprocessing import AuthenticationError
 from typing import Optional, Union
 
+from qiskit_iqm import IQMProvider
+
 from qiskit import IBMQ, Aer
 from qiskit.algorithms import QAOA
 from qiskit.providers.backend import Backend
@@ -49,6 +51,16 @@ def initialize_backend(
     elif provider.lower() == "qasm simulator":
         return Aer.get_backend("qasm_simulator"), provider
 
+    elif provider.lower() == "iqm":
+        try:
+            IQM_SERVER_URL = os.getenv("IQM_SERVER_URL")
+            provider = IQMProvider(IQM_SERVER_URL)
+            backend = provider.get_backend()
+            backend.name = "iqm"  # QAOAO requires backend name
+            return backend, provider
+        except:
+            raise ValueError("Could not instantiate IQM backend!")
+
     elif provider.lower() == "ibm":
         try:
             IBMQ.load_account()
@@ -68,7 +80,8 @@ def initialize_backend(
             QI_URL = os.getenv("API_URL", "https://api.quantum-inspire.com/")
             project_name = f"TNO Q-score {int(time.time())}"
 
-            QI.set_authentication(qi_authentication, QI_URL, project_name=project_name)
+            QI.set_authentication(qi_authentication, QI_URL,
+                                  project_name=project_name)
             return QI.get_backend(backend), QI
         except:
             raise AuthenticationError("Authentication with QI failed.")
@@ -104,7 +117,7 @@ def run_QAOA(
 
     backend, provider_ = initialize_backend(provider, backend)
     backend.shots = number_of_shots
-    if provider == "ibm":
+    if provider in "ibm":
         qaoa_mes = QAOAClient(
             provider=provider_,
             backend=backend,
