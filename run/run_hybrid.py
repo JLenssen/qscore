@@ -7,8 +7,6 @@ from collections import defaultdict
 import dimod
 from dwave.system import LeapHybridSampler
 
-sampler_LeapHybrid = LeapHybridSampler(solver={"category": "hybrid"})
-
 
 def run_hybrid(
     Q: defaultdict(int),
@@ -27,6 +25,8 @@ def run_hybrid(
         The largest found objective value. If no solution is found within the provided
         timeout limit, np.nan is being returned.
     """
+    sampler_LeapHybrid = LeapHybridSampler(solver={"category": "hybrid"})
+
     bqm = dimod.BQM.from_qubo(Q)
     sampleset = sampler_LeapHybrid.sample(
         bqm, label=f"Problem-{size:2d}", time_limit=timeout

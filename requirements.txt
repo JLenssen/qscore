@@ -4,6 +4,6 @@ dwave-ocean-sdk==4.4.0
 strawberryfields==0.23.0
 matplotlib==3.5.2
 qiskit[optimization]==0.39.4
-quantuminspire==2.0.0
+quantuminspire==2.2.0
 python-dotenv==0.21.0
 pytest==7.2.1
