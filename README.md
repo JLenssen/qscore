@@ -108,3 +108,13 @@ Example usage for the IBM Lima device:
 ```python
 python evaluate.py -p "max-clique" -s 5 -t 60 -n 1024 -solver "QAOA" -provider "ibm" -backend "ibmq_lima" 
 ```
+
+### Set up IQM configuration
+
+To use IQM hardware backends, one need to export the backend server url in the environment variable `IQM_SERVER_URL` and the token file location in the `IQM_TOKENS_FILE` environment variable.
+
+```bash
+export IQM_SERVER_URL=...
+export IQM_TOKENS_FILE=...
+ python evaluate.py -p "max-cut" -s 4 -t 10 -n 10 --provider "iqm" --solver "QAOA"
+```
